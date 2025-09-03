@@ -1,0 +1,9 @@
+# Ignore vendored Flutter SDK and common build artifacts
+flutter/
+.dart_tool/
+.vscode/
+build/
+.DS_Store
+Thumbs.db
+*.log
+
