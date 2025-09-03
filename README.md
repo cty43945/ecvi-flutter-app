@@ -1,5 +1,8 @@
 # eCVI Flutter Application
 
+[![CI](https://github.com/cty43945/ecvi-flutter-app/actions/workflows/ci.yml/badge.svg)](https://github.com/cty43945/ecvi-flutter-app/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/cty43945/ecvi-flutter-app?include_prereleases&sort=semver)](https://github.com/cty43945/ecvi-flutter-app/releases)
+
 This is a cross-platform Flutter application for creating electronic Certificates of Veterinary Inspection (eCVIs). The goal is to provide a free, offline-first tool that follows the USAHA/AAVLD eCVI schema (v2), generates compliant XML, and produces a printable PDF certificate.
 
 ## Features
