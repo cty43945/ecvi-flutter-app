@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eCVI xmlns="http://www.usaha.org/xmlns/ecvi2" XMLSchemaVersion="3.1" CviNumber="MN-12345-20250101T000000Z" IssueDate="2025-09-03" ExpirationDate="2025-10-03">
+  <Veterinarian LicenseState="MN" LicenseNumber="12345">
+    <Person>
+      <NameParts>
+        <BusinessName>Doe Vet Clinic</BusinessName>
+        <FirstName>John</FirstName>
+        <LastName>Doe</LastName>
+      </NameParts>
+      <Phone Number="5551234567"/>
+      <Email Address="john.doe@example.com"/>
+    </Person>
+  </Veterinarian>
+  <MovementPurposes>
+    <MovementPurpose>Sale</MovementPurpose>
+  </MovementPurposes>
+  <Origin>
+    <Address>
+      <Line1>100 Farm Rd</Line1>
+      <Town>Bemidji</Town>
+      <State>MN</State>
+      <ZIP>56601</ZIP>
+      <Country>USA</Country>
+    </Address>
+  </Origin>
+  <Destination>
+    <Address>
+      <Line1>200 Ranch Ln</Line1>
+      <Town>Fargo</Town>
+      <State>ND</State>
+      <ZIP>58102</ZIP>
+      <Country>USA</Country>
+    </Address>
+  </Destination>
+  <Consignor>
+    <Address>
+      <Address>
+        <Line1>100 Farm Rd</Line1>
+        <Town>Bemidji</Town>
+        <State>MN</State>
+        <ZIP>56601</ZIP>
+        <Country>USA</Country>
+      </Address>
+    </Address>
+    <Person>
+      <Name>Alice Farmer</Name>
+    </Person>
+  </Consignor>
+  <Consignee>
+    <Address>
+      <Address>
+        <Line1>200 Ranch Ln</Line1>
+        <Town>Fargo</Town>
+        <State>ND</State>
+        <ZIP>58102</ZIP>
+        <Country>USA</Country>
+      </Address>
+    </Address>
+    <Person>
+      <Name>Bob Buyer</Name>
+    </Person>
+  </Consignee>
+  <Animal Breed="Beef" Sex="Female" InspectionDate="2025-09-03">
+    <SpeciesOther Text="Bovine"/>
+    <AnimalTags>
+      <ManagementID Number="RFID-001"/>
+    </AnimalTags>
+  </Animal>
+  <Animal Breed="Beef" Sex="Male" InspectionDate="2025-09-03">
+    <SpeciesOther Text="Bovine"/>
+    <AnimalTags>
+      <ManagementID Number="RFID-002"/>
+    </AnimalTags>
+  </Animal>
+  <Statements>Animals inspected and found free of communicable disease.</Statements>
+</eCVI>

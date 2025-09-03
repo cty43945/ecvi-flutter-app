@@ -18,15 +18,20 @@ dependencies:
   # Local file storage and database
   path_provider: ^2.0.14
   sqflite: ^2.2.0+3
+  path: ^1.8.3
 
   # XML and PDF generation
   xml: ^6.1.0
   pdf: ^3.8.1
+  csv: ^5.0.2
+  share_plus: ^10.0.2
 
   # Signature capture and file import
   signature: ^4.1.0
-  image_picker: ^0.8.7+4
-  file_picker: ^5.2.6
+  # image_picker: ^0.8.7+4
+  file_picker: ^10.3.2
+
+  #
 
 dev_dependencies:
   flutter_test:
@@ -35,9 +40,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    # Add images or assets used in the app here
-    # - assets/images/
+  assets: []
 
   # This section can be extended after running `flutter create .`
 

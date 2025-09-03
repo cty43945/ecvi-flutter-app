@@ -21,6 +21,7 @@ class Certificate {
     required this.destination,
     required this.movementPurpose,
     required this.dateOfIssue,
+    required this.expirationDate,
     this.statements = const <String>[],
     this.animals = const <Animal>[],
     this.signaturePath,
@@ -49,6 +50,9 @@ class Certificate {
 
   /// Date/time the certificate was issued.
   final DateTime dateOfIssue;
+
+  /// Date the certificate expires (policy-driven; typically 30 days after issue).
+  final DateTime expirationDate;
 
   /// Additional statements or declarations included on the certificate.
   final List<String> statements;
@@ -88,6 +92,7 @@ class Certificate {
       'destination_postal_code': destination.postalCode,
       'movement_purpose': movementPurpose,
       'date_of_issue': dateOfIssue.toIso8601String(),
+      'expiration_date': expirationDate.toIso8601String(),
       'statements': statements.join('\n'),
       'signature_path': signaturePath,
     };

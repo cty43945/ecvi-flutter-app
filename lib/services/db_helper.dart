@@ -36,7 +36,7 @@ class DbHelper {
     final dbPath = path.join(documentsDir.path, 'ecvi.db');
     return openDatabase(
       dbPath,
-      version: 1,
+      version: 2,
       onCreate: (db, version) async {
         // Certificates table
         await db.execute('''
@@ -65,6 +65,7 @@ class DbHelper {
             destination_postal_code TEXT,
             movement_purpose TEXT,
             date_of_issue TEXT,
+            expiration_date TEXT,
             statements TEXT,
             signature_path TEXT
           )
@@ -85,13 +86,18 @@ class DbHelper {
           )
         ''');
       },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('ALTER TABLE certificates ADD COLUMN expiration_date TEXT');
+        }
+      },
     );
   }
 
   /// Inserts a certificate and its animals into the database.
   Future<void> insertCertificate(Certificate cert) async {
     final db = await database;
-    await db.insert('certificates', cert.toMap());
+    await db.insert('certificates', cert.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
     // insert animals
     for (final animal in cert.animals) {
       await db.insert('animals', animal.toMap(cert.id));
@@ -136,6 +142,16 @@ class DbHelper {
           postalCode: row['destination_postal_code'] as String,
         ),
       );
+      final stmtsRaw = row['statements'] as String?;
+      final stmts = (stmtsRaw == null || stmtsRaw.isEmpty)
+          ? <String>[]
+          : stmtsRaw.split('\n').where((s) => s.isNotEmpty).toList();
+      final issueStr = row['date_of_issue'] as String;
+      final expStr = row['expiration_date'] as String?;
+      final issue = DateTime.parse(issueStr);
+      final expiration = (expStr == null || expStr.isEmpty)
+          ? issue.add(const Duration(days: 30))
+          : DateTime.parse(expStr);
       return Certificate(
         id: row['id'] as String,
         veterinarian: vet,
@@ -144,8 +160,9 @@ class DbHelper {
         origin: consignor.address,
         destination: consignee.address,
         movementPurpose: row['movement_purpose'] as String,
-        dateOfIssue: DateTime.parse(row['date_of_issue'] as String),
-        statements: (row['statements'] as String).split('\n'),
+        dateOfIssue: issue,
+        expirationDate: expiration,
+        statements: stmts,
         animals: const <Animal>[],
         signaturePath: row['signature_path'] as String?,
       );
@@ -167,5 +184,75 @@ class DbHelper {
         tests: row['tests'] != null ? (row['tests'] as String).split('\n') : null,
       );
     }).toList();
+  }
+
+  /// Retrieves a single certificate by ID (animals not included).
+  Future<Certificate?> getCertificateById(String id) async {
+    final db = await database;
+    final maps = await db.query('certificates', where: 'id = ?', whereArgs: [id], limit: 1);
+    if (maps.isEmpty) return null;
+    final row = maps.first;
+    final vet = Veterinarian(
+      firstName: row['vet_first_name'] as String,
+      lastName: row['vet_last_name'] as String,
+      licenseNumber: row['vet_license'] as String,
+      licenseState: row['vet_state'] as String,
+      accreditationNumber: row['vet_accreditation'] as String?,
+    );
+    final consignor = Contact(
+      name: row['consignor_name'] as String,
+      businessName: row['consignor_business'] as String?,
+      phone: row['consignor_phone'] as String?,
+      email: row['consignor_email'] as String?,
+      address: Address(
+        street: row['origin_street'] as String,
+        city: row['origin_city'] as String,
+        state: row['origin_state'] as String,
+        postalCode: row['origin_postal_code'] as String,
+      ),
+    );
+    final consignee = Contact(
+      name: row['consignee_name'] as String,
+      businessName: row['consignee_business'] as String?,
+      phone: row['consignee_phone'] as String?,
+      email: row['consignee_email'] as String?,
+      address: Address(
+        street: row['destination_street'] as String,
+        city: row['destination_city'] as String,
+        state: row['destination_state'] as String,
+        postalCode: row['destination_postal_code'] as String,
+      ),
+    );
+    final stmtsRaw = row['statements'] as String?;
+    final stmts = (stmtsRaw == null || stmtsRaw.isEmpty)
+        ? <String>[]
+        : stmtsRaw.split('\n').where((s) => s.isNotEmpty).toList();
+    final issueStr = row['date_of_issue'] as String;
+    final expStr = row['expiration_date'] as String?;
+    final issue = DateTime.parse(issueStr);
+    final expiration = (expStr == null || expStr.isEmpty)
+        ? issue.add(const Duration(days: 30))
+        : DateTime.parse(expStr);
+    return Certificate(
+      id: row['id'] as String,
+      veterinarian: vet,
+      consignor: consignor,
+      consignee: consignee,
+      origin: consignor.address,
+      destination: consignee.address,
+      movementPurpose: row['movement_purpose'] as String,
+      dateOfIssue: issue,
+      expirationDate: expiration,
+      statements: stmts,
+      animals: const <Animal>[],
+      signaturePath: row['signature_path'] as String?,
+    );
+  }
+
+  /// Deletes a certificate and its associated animals.
+  Future<void> deleteCertificate(String id) async {
+    final db = await database;
+    await db.delete('animals', where: 'certificate_id = ?', whereArgs: [id]);
+    await db.delete('certificates', where: 'id = ?', whereArgs: [id]);
   }
 }

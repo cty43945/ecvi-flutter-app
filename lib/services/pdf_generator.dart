@@ -6,6 +6,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../models/certificate.dart';
 import '../models/animal.dart';
+import '../util/format.dart';
 
 /// Utility class for generating a human‑readable PDF certificate.
 ///
@@ -81,7 +82,11 @@ class PdfGenerator {
         ]),
         pw.Row(children: [
           pw.Text('Issue Date: ', style: labelStyle),
-          pw.Text(cert.dateOfIssue.toLocal().toString(), style: valueStyle),
+          pw.Text(formatDateMmddyyyy(cert.dateOfIssue), style: valueStyle),
+        ]),
+        pw.Row(children: [
+          pw.Text('Expiration Date: ', style: labelStyle),
+          pw.Text(formatDateMmddyyyy(cert.expirationDate), style: valueStyle),
         ]),
         pw.Row(children: [
           pw.Text('Purpose of Movement: ', style: labelStyle),
@@ -170,7 +175,7 @@ class PdfGenerator {
         if (signatureImage == null)
           pw.Text('(Signature not captured)', style: pw.TextStyle(fontSize: 8, fontStyle: pw.FontStyle.italic)),
         pw.SizedBox(height: 4),
-        pw.Text('${cert.veterinarian.fullName}', style: pw.TextStyle(fontSize: 8)),
+        pw.Text(cert.veterinarian.fullName, style: pw.TextStyle(fontSize: 8)),
         pw.Text('License: ${cert.veterinarian.licenseNumber} (${cert.veterinarian.licenseState})', style: pw.TextStyle(fontSize: 8)),
         if (cert.veterinarian.accreditationNumber != null && cert.veterinarian.accreditationNumber!.isNotEmpty)
           pw.Text('Accreditation: ${cert.veterinarian.accreditationNumber}', style: pw.TextStyle(fontSize: 8)),
