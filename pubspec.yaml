@@ -1,0 +1,44 @@
+name: ecvi_flutter_app
+description: >
+  An offline‑first Flutter application for creating electronic Certificates of Veterinary
+  Inspection (eCVI) compliant with the USAHA/AAVLD eCVI XML schema version 2.
+version: 0.1.0
+
+environment:
+  sdk: '>=2.17.0 <4.0.0'
+  # After running `flutter create .`, Flutter will inject its own constraints.
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Basic UI icons
+  cupertino_icons: ^1.0.2
+
+  # Local file storage and database
+  path_provider: ^2.0.14
+  sqflite: ^2.2.0+3
+
+  # XML and PDF generation
+  xml: ^6.1.0
+  pdf: ^3.8.1
+
+  # Signature capture and file import
+  signature: ^4.1.0
+  image_picker: ^0.8.7+4
+  file_picker: ^5.2.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    # Add images or assets used in the app here
+    # - assets/images/
+
+  # This section can be extended after running `flutter create .`
+
+# Note: run `flutter pub get` after running `flutter create .` to install dependencies.

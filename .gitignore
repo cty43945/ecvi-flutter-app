@@ -1,0 +1,34 @@
+# Dart/Flutter specific ignores
+.dart_tool/
+.packages
+pubspec.lock
+build/
+
+# Flutter & Dart generated files
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+.vscode/
+*.iml
+
+# Android
+android/local.properties
+android/gradle/gradle.properties
+
+# iOS
+ios/Pods/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+
+# macOS
+macos/Flutter/
+macos/Pods/
+
+# Web
+web/.dart_tool/
+web/generated_plugin_registrant.dart
+
+# Others
+build/web/
+.DS_Store
+.env
