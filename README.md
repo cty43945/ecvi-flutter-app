@@ -59,6 +59,20 @@ ecvi_flutter_app/
 - The XSD file provided is stored at `assets/xsd/ecvi2_v3.1.xsd`.
 - Optional validation helper is provided: `dart run tool/xsd_validate.dart <xml> assets/xsd/ecvi2_v3.1.xsd` (requires `xmllint`).
 
+## Web Demo (GitHub Pages)
+
+- After the first successful run of the Pages workflow, the web build is deployed to `gh-pages`.
+- Expected site URL: `https://cty43945.github.io/ecvi-flutter-app/`
+- Base href is configured in the deploy workflow for correct asset paths.
+
+## For State Administrators
+
+- See `docs/STATE_ADMIN.md` for guidance on:
+  - Branding, validation rules, and statements
+  - XML schema alignment (eCVI v2 / XSD 3.1)
+  - Distribution (mobile stores, MDM, GitHub Pages)
+  - CI, releases, and data handling policies
+
 ## License
 
 MIT License. See `LICENSE` for details.
