@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -382,6 +383,13 @@ class _CertificateFormScreenState extends State<CertificateFormScreen> {
   }
 
   Future<void> _saveCertificate() async {
+    if (kIsWeb) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Saving is disabled in the web demo. Please run on mobile/desktop.')),
+      );
+      return;
+    }
     if (!_formKey.currentState!.validate()) return;
     if (animals.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please add at least one animal')));

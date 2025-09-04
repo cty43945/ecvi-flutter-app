@@ -64,6 +64,7 @@ ecvi_flutter_app/
 - After the first successful run of the Pages workflow, the web build is deployed to `gh-pages`.
 - Expected site URL: `https://cty43945.github.io/ecvi-flutter-app/`
 - Base href is configured in the deploy workflow for correct asset paths.
+- Note: The web demo is read-only and does not persist data or access the device file system. Features requiring local storage (SQLite) and filesystem (exports to documents directory) are disabled on web. Use Android/iOS/desktop for full functionality.
 
 ## For State Administrators
 

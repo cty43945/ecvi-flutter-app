@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../models/certificate.dart';
 import '../services/db_helper.dart';
@@ -122,7 +123,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _loadCertificates() {
-    _certificates = DbHelper().getCertificates();
+    if (kIsWeb) {
+      _certificates = Future.value(<Certificate>[]);
+    } else {
+      _certificates = DbHelper().getCertificates();
+    }
   }
 
   void _navigateToNewCertificate() async {
