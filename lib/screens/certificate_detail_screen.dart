@@ -1,4 +1,4 @@
-﻿import 'dart:io';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -201,7 +201,7 @@ class _CertificateDetailScreenState extends State<CertificateDetailScreen> {
               const Divider(),
               _buildSectionTitle('Statements'),
               if (cert.statements.isEmpty) const Text('(none)'),
-              ...cert.statements.map((s) => Text('• ')),
+              ...cert.statements.map((s) => Text('\\u2022 $s')),
               const Divider(),
               _buildSectionTitle('Animals'),
               FutureBuilder<List<Animal>>(
@@ -254,6 +254,10 @@ class _CertificateDetailScreenState extends State<CertificateDetailScreen> {
     );
   }
 }
+
+
+
+
 
 
 
